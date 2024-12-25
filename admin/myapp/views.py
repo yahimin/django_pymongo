@@ -4,12 +4,13 @@ from django.http import HttpResponse
 
 from djongo import models
 
-
-def index(request):
-    return HttpResponse("<h1>Hello and welcome to my first <u>Django App</u> project!</h1>")
-
+#----------------------------------------
 from pymongo import MongoClient
-from django.conf import settings
+
+from .models import SampleDetails
+
+import pprint
+
 my_client = MongoClient('localhost', 27017)
 
 #  first define the database name
@@ -27,11 +28,52 @@ medicine_1 = {
     "category": "fever"
 }
 
-collection_name.insert_many([medicine_1])
+# collection_name.insert_many([medicine_1])
 
 
-med_detatils = collection_name.find({})
+# med_detatils = collection_name.find({})
 
 
-for r in med_detatils:
-    print(r['common_name'])
+# [x] : 전체 데이터 출력
+# [] : 이름만 출력
+# [] : 이름,카테고리만출력
+
+
+# [] : 버튼 하나만들고 누르면 이름만 출력
+# [] : 버튼 하나만들고 누르면 이름,카테고리만 출력
+
+
+def index(request):
+    
+    
+    
+    
+    return HttpResponse("<h1>my home<u>Django App</u> project!</h1>")
+
+
+def get_list(request):
+    
+    print(request.method,'-----------')    
+    data = collection_name.find({"common_name": "Paracetamol"})
+
+    for r in data:
+        pprint.pprint(r)
+    
+    
+    return HttpResponse("<h1>Hello and welcome to my first <u>Django App</u> project!</h1>")
+
+def get_name_list(request):
+    
+    # {'_id': ObjectId('676b97af1d3b476e0b2c90f1'), 'common_name': 'Paracetamol'}
+    data = collection_name.find({},{"common_name"})
+    
+    
+#   'Paracetamol'
+#   'Paracetamol'
+#   'Paracetamol'
+#   'Paracetamol'
+    for r in data:
+        pprint.pprint(r['common_name'])
+    
+        
+    return HttpResponse("<h1>Hello and welcome to my first <u>Django App</u> project!</h1>")
