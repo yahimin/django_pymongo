@@ -44,7 +44,7 @@ medicine_1 = {
 
 # [x] : 버튼 하나만들고 누르면 데이터 추가
 # [x] : form 하나 만들고 입력하고 누르면 데이처 추가
-# [] : 버튼 하나만들고 누르면 이름,카테고리만 출력
+# [x] :  버튼 하나만들고 누르면 이름,카테고리만 출력 (프론트쪽에서 해도 되는데 백엔드 쪽에서 해보기)
 
 #--------------------------------------------------
 
@@ -125,3 +125,14 @@ def add_detail_user(request):
         form = UserField()
         
     return render(request,'form.html',{'form': form})
+
+
+def get_cate_name_list(request):
+    
+    if request.method =='GET':
+        
+        data = list(collection_name.find({}, {"common_name" , "category"}))        
+        print(data)
+        
+        
+        return render(request,'c_n_list.html',{"data" : data})
