@@ -5,7 +5,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Student Details <span><a href="/add"><button>Add student detail</button></a></span></h1>
+    <h1>Student Details <span>
+        <form  method="POST"
+            action="{% url 'add_user' %}"
+        >
+        {% csrf_token %}
+        <button type="submit">Add student detail</button></span>
+    
+        </form>
+    </h1>
 <table>
         <ul> 
         {% for p in data %} 

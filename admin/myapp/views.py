@@ -40,7 +40,8 @@ medicine_1 = {
 # [x] : 이름,카테고리만출력
 
 
-# [] : 버튼 하나만들고 누르면 이름만 출력
+# [] : 버튼 하나만들고 누르면 데이터 추가
+# [] : form 하나 만들고 입력하고 누르면 데이처 추가
 # [] : 버튼 하나만들고 누르면 이름,카테고리만 출력
 
 
@@ -81,6 +82,23 @@ def get_name_list(request):
     
     return render(request,"name_list.html",{'data': data})
     
+
+def add_user(request):
+    
+    print(request.method)
+    
+    if request.method =='POST':
         
+       medicine_2 ={
+        "medicine_id": "RR000342522",
+        'common_name' : 'Jeon',
+        "availabe" : 'Y',
+        "category" : 'type 2 hh'
+    }
+       collection_name.insert_many([medicine_2])
+    
+ 
+    
+    return HttpResponse('<h1>hi</h1>')
 
 
