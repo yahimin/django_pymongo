@@ -35,9 +35,9 @@ medicine_1 = {
 # med_detatils = collection_name.find({})
 
 
-# [] : 전체 데이터 출력
-# [] : 이름만 출력
-# [] : 이름,카테고리만출력
+# [x] : 전체 데이터 출력
+# [x] : 카타고리만 출력
+# [x] : 이름,카테고리만출력
 
 
 # [] : 버튼 하나만들고 누르면 이름만 출력
@@ -55,8 +55,6 @@ def get_list(request):
     # Convert cursor to list
     # 몽고디비는 항상 리스트를 convert 해줘서 던져줘야한다
     data = list(collection_name.find({}))
-  
-    
     try:
         for p in data:
             pprint(p)
@@ -71,7 +69,7 @@ def get_list(request):
 def get_name_list(request):
     
     # {'_id': ObjectId('676b97af1d3b476e0b2c90f1'), 'common_name': 'Paracetamol'}
-    data = collection_name.find({},{"common_name"})
+    data = list(collection_name.find({},{"common_name"}))
     
     
 #   'Paracetamol'
@@ -79,8 +77,10 @@ def get_name_list(request):
 #   'Paracetamol'
 #   'Paracetamol'
     for r in data:
-        pprint.pprint(r['common_name'])
+        pprint(r['common_name'])
+    
+    return render(request,"name_list.html",{'data': data})
     
         
-    return HttpResponse("<h1>Hello and welcome to my first <u>Django App</u> project!</h1>")
+
 
