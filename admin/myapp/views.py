@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 # Create your views here.
 
@@ -11,6 +11,8 @@ from pymongo import MongoClient
 from pprint import pprint
 
 from django.http import JsonResponse
+
+from .forms import UserField
 
 my_client = MongoClient('localhost', 27017)
 
@@ -34,20 +36,23 @@ medicine_1 = {
 
 # med_detatils = collection_name.find({})
 
-
+#### CRUD Pymongo + Django
 # [x] : 전체 데이터 출력
 # [x] : 카타고리만 출력
 # [x] : 이름,카테고리만출력
 
 
-# [] : 버튼 하나만들고 누르면 데이터 추가
+# [x] : 버튼 하나만들고 누르면 데이터 추가
 # [] : form 하나 만들고 입력하고 누르면 데이처 추가
 # [] : 버튼 하나만들고 누르면 이름,카테고리만 출력
+
+#--------------------------------------------------
+
+# [] : nginx + djanogo
 
 
 def index(request):    
     return render(request,'view.html')
-    # return HttpResponse("<h1>my home<u>Django App</u> project!</h1>")
 
 
 def get_list(request):
@@ -102,3 +107,21 @@ def add_user(request):
     return HttpResponse('<h1>hi</h1>')
 
 
+def add_detail_user(request):
+    
+    if request.method == 'POST':
+        form = UserField(request.POST)
+        
+        if form.is_valid():
+            try:
+                print(form.cleaned_data)
+                collection_name.insert_one(form.cleaned_data)
+                        
+            except Exception as e:
+                return HttpResponse(f"<h1>{str(e)}</h1>")           
+   
+    
+    if request.method == 'GET':
+        form = UserField()
+        
+    return render(request,'form.html',{'form': form})

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello</title>
+</head>
+<body>
+    <h1>Hello, welcome to my Django app!</h1>
+
+    <form method = "POST">
+    {% csrf_token %}
+    <div class="form-group">
+        {{form.as_p}}    
+    </div>
+
+    <div>
+        <button type="submit">
+            Submit
+        </button>
+    <div>
+    
+    </form>
+
+</body>
+</html>
